@@ -4,7 +4,7 @@
 | NRP | Nama Anggota |
 |-----|--------------|
 | 5027221049 | Arsyad Rizantha Maulana Salim |
-| 50272210 | Ditya Wahyu Ramadan |
+| 5027221051 | Ditya Wahyu Ramadan |
 | 50272210 | Zidny Ilman Nafian |
 | 50272210 | Almendo Jekson Darwin Naftali Kambu |
 
