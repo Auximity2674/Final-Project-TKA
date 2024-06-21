@@ -15,3 +15,7 @@ Anda adalah seorang lulusan Teknologi Informasi, sebagai ahli IT, salah satu kem
 ![](Images/Rancangan%20Arsitektur%20Cloud.png "test")
 
 Untuk membangun arsitektur tersebut, kami  menggunakan layanan awan dari Digital Ocean dengan memanfaatkan free-trial sebesar $200. Rincian spesifikasi VM beserta harganya adalah sebagai berikut:
+
+![](Images/Spesifikasi.png "test1")
+
+# Langkah-Langkah Implementasi
