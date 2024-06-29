@@ -24,8 +24,8 @@ Untuk membangun infrastruktur tersebut, kami menggunakan layanan awan dari `Goog
 
 | No | Nama                           | Spesifikasi          | Harga   |
 |--- |--------------------------------|----------------------|---------|
-| 1  | Worker 1                       | 2 vCPUs, 2 GB RAM    | $18     |
-| 2  | Worker 2                       | 2 vCPUs, 2 GB RAM    | $18     |
+| 1  | Worker 1                       | 2 vCPUs, 2 GB RAM, Debian 12    | $18     |
+| 2  | Worker 2                       | 2 vCPUs, 2 GB RAM, Debian 12   | $18     |
 | 3  | Load Balancer                  | Bawaan Google Cloud  | -       |
 |    |                                | **Total**            | **$36** |
 
@@ -141,12 +141,15 @@ Request berhasil terkirim ke endpoint dengan metode GET, terlihat dari respons y
 ## V. Pengetesan Load Balancing
 ### Peak RPS, 60s
 #### Worker 1
-![total_requests_per_second_1719673705 774](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/de06dcd8-12d0-4d52-8ff2-cbe73a5fb55c)
-RPS maksimal tercatat pada 93.4 requests/sec. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
-![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/c4bdb4c8-bf79-4975-9ee2-59f1e62937bd)
+![total_requests_per_second_1719679002 57](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/7d7b47b2-589b-4d7e-a29c-4c462e07b325)
+Menggunakan spawn rate 450, RPS maksimal tercatat pada 135.1 requests/sec. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/0dd093c6-1100-4720-be5b-618ba5f057cf)
 
 #### Worker 2
-[TBA]
+![total_requests_per_second_1719678592 279](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/bde4d351-2319-4353-9562-c730b7f9d89d)
+Menggunakan spawn rate 450, RPS maksimal tercatat pada 145.83 requests/sec. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/592a3610-0271-4baf-ae2b-6dc8e4e8eada)
+
 
 ### Peak Concurrency, Spawn Rate 50, 60s
 #### Worker 1
@@ -154,14 +157,16 @@ RPS maksimal tercatat pada 93.4 requests/sec. Tanpa failure, sehingga dapat dipa
 Concurrency maksimal tercatat pada 400 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 
 #### Worker 2
-[TBA]
+![total_requests_per_second_1719677148 251](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/1898b02b-415b-4e39-98a8-9e677e5fbc66)
+Concurrency maksimal tercatat pada 400 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 
 ### Peak Concurrency, Spawn Rate 100, 60s
 #### Worker 1
 ![total_requests_per_second_1719675353 113](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/661cffe8-3f9c-4c50-aba2-820dfeede168)
 Concurrency maksimal tercatat pada 400 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 #### Worker 2
-[TBA]
+![total_requests_per_second_1719677322 958](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/f6a5b06f-f214-4130-8651-26d17f250ea2)
+Concurrency maksimal tercatat pada 400 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 
 
 ### Peak Concurrency, Spawn Rate 200, 60s
@@ -169,15 +174,21 @@ Concurrency maksimal tercatat pada 400 users. Tanpa failure, sehingga dapat dipa
 ![total_requests_per_second_1719675625 578](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/300eb604-352c-45ec-b9ad-8b59c6b8c7fc)
 Concurrency maksimal tercatat pada 400 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 #### Worker 2
-[TBA]
+![total_requests_per_second_1719677591 688](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/0a96e926-513b-417b-81a0-4f3ee705a8ab)
+Concurrency maksimal tercatat pada 380 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 
 
 ### Peak Concurrency, Spawn Rate 500, 60s
 #### Worker 1
-![total_requests_per_second_1719676232 613](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/86f105e6-1291-4cde-b2cc-33b99a8ef598)
-Concurrency maksimal tercatat pada 500 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
+![total_requests_per_second_1719679002 57](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/7d7b47b2-589b-4d7e-a29c-4c462e07b325)
+Concurrency maksimal tercatat pada 450 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 #### Worker 2
-[TBA]
+![total_requests_per_second_1719678592 279](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/bde4d351-2319-4353-9562-c730b7f9d89d)
+Concurrency maksimal tercatat pada 450 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 
 ## VI. Saran dan Kesimpulan
-[TBA]
+Dengan budget bulanan sebesar $36, kami dapat mengoptimalkan Google Cloud Platform (GCP) untuk menjalankan dua VM (virtual machine) dengan Google Compute Engine. VM 1 akan menampung worker 1 yang terdiri dari web server dan database, sedangkan VM 2 akan menampung worker 2 yang hanya memiliki web server. Juga didukung oleh load balancer bawaan dari Google Cloud.
+
+Berdasarkan laporan dari Locust, terbukti bahwa peningkatan user spawn rate secara signifikan meningkatkan RPS (Request Per Second) dan concurrency. Namun, perlu diperhatikan bahwa peak concurrency yang berlebihan dapat mengakibatkan kegagalan koneksi server (failure).
+
+Saran ke depan ialah mencoba untuk mengoptimalkan kembali secara spesifikasi VM serta teknik-teknik cloud lainnya untuk meningkatkan RPS dan concurrency tanpa mengkompromikan kestabilan koneksi. Seperti auto-scaling, auto-recovery/auto-revive, caching, dan lainnya.
