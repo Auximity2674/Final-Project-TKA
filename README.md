@@ -11,6 +11,39 @@
 # Problem
 Anda adalah seorang lulusan Teknologi Informasi, sebagai ahli IT, salah satu kemampuan yang harus dimiliki adalah Keampuan merancang, membangun, mengelola aplikasi berbasis komputer menggunakan layanan awan untuk memenuhi kebutuhan organisasi.
 
+# Endpoints
+#### 1. Analyze Text
+
+  - Endpoint: `POST /analyze`
+  - Description: This endpoint accepts a text input and returns the sentiment score of the text.
+  - Request:
+    ```
+    {
+        "text": "Your text here"
+    }
+    ```
+  - Response:
+    ```
+    {
+        "sentiment": <sentiment_score>
+    }
+    ```
+
+#### 2. Retrieve History
+
+  - Endpoint: `GET /history`
+  - Description: This endpoint retrieves the history of previously analyzed texts along with their sentiment scores.
+  - Response:
+    ```
+    {
+        {
+            "text": "Your previous text here",
+            "sentiment": <sentiment_score>
+        },
+        ...
+    }
+    ```
+
 # Rancangan Arsitektur Cloud
 Berikut rancangan arsitektur cloud final project kami.
 
