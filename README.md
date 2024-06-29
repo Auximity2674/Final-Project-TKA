@@ -51,6 +51,14 @@ Berikut rancangan arsitektur cloud final project kami.
 
 Untuk membangun arsitektur tersebut, kami  menggunakan layanan awan dari `Digital Ocean` dengan memanfaatkan free-trial sebesar `$200`. Rincian spesifikasi VM beserta harganya adalah sebagai berikut:
 
-![](Images/Spesifikasi.png "test1")
+| No | Nama                           | Spesifikasi          | Harga |
+|--- |--------------------------------|----------------------|------|
+| 1  | Backend                        | 2 vCPUs, 4 GB memory | $24  |
+| 2  | Database                       | 2 vCPUs, 2 GB memory | $12  |
+| 3  | Frontend                       | 1 vCPU, 1 GB memory  | $6   |
+| 4  | Load Balancer                  | 1 vCPU, 2 GB memory  | $12  |
+| 5  | Storage                        | 50 GB                | $5   |
+|    |                                | **Total**            | **$59** |
+
 
 # Langkah-Langkah Implementasi dan Konfigurasi VM
