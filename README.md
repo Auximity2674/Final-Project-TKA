@@ -33,7 +33,7 @@ Untuk membangun infrastruktur tersebut, kami menggunakan layanan awan dari `Goog
 ## III. Implementasi dan Konfigurasi
 
 ### Google Cloud Platform
-#### Pembuatan VM Instance untuk Worker 1 dan Worker 2
+#### Pembuatan VM Instance untuk Worker 1 dan Worker 2 dengan Google Compute Engine
 1. Masuk ke [Google Cloud Console](https://console.cloud.google.com/) lalu masuk ke Compute Engine
 2. Pada VM instances, buat instance baru dengan klik tombol "Create Instance"
 3. Pilih region Jakarta, zone terserah, lalu pilih machine configuration E2
@@ -43,5 +43,74 @@ Untuk membangun infrastruktur tersebut, kami menggunakan layanan awan dari `Goog
 5. Pada firewall, centang semua agar VM bisa diakses secara umum
 ![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/e99d7250-d594-461d-83bb-61f228d460be)
 6. Jika sudah, klik tombol create di bagian bawah layar
+7. Ulangi sekali lagi untuk VM instance worker 2
+
 #### Konfigurasi VM Worker 1
-[TBA]
+1. Masuk via SSH dengan klik tombol SSH pada kolom Connect di halaman VM instances
+2. Akan diminta authorization, klik saja Authorize
+3. Saat sudah masuk, harusnya akan terlihat seperti ini
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/53d106e2-7a88-43ad-9b7b-af7ff62da93d)
+4. Install MongoDB dengan mengikuti [guide resmi](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/), pertama kami install package yang wajib terlebih dahulu
+```
+sudo apt-get install gnupg curl
+```
+5. Lalu import public GPG key
+```
+curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+   --dearmor
+```
+6. Buat keyring file (ini untuk Debian 12, sesuai default VM Google Compute Engine)
+```
+echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] http://repo.mongodb.org/apt/debian bookworm/mongodb-org/7.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+```
+7. Update database package
+```
+sudo apt-get update
+```
+8. Install package MongoDB
+```
+sudo apt-get install -y mongodb-org
+```
+9. Sebelum start service, kami edit dulu config file MongoDB agar bisa diakses oleh VM worker 2
+```
+nano /etc/mongod.conf
+```
+10. Pada `bindIp` tambahkan IP internal VM worker 1, nanti ini akan mengizinkan VM worker 2 untuk mengakses MongoDB melalui IP internal worker 1. Karena menggunakan IP internal, sehingga perangkat di luar jaringan internal VM kami tidak dapat mengakses MongoDB ini.
+
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/b0a78fd8-3da8-4c96-a168-b24bf25357d4)
+
+11. Exit menggunakan Ctrl + X, lalu Y, dan terakhir Enter. Setelah itu kami menghidupkan MongoDB dengan perintah ini
+```
+sudo systemctl start mongod
+```
+12. Pastikan MongoDB telah aktif
+```
+sudo systemctl status mongod
+```
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/4ec63f93-3935-4cd5-855d-a0459b3a2687)
+13. Agar MongoDB selalu aktif setiap reboot VM, kami jalan perintah ini
+```
+sudo systemctl enable mongod
+```
+14. Selanjutnya, install Python serta `pip` untuk install package yang dibutuhkan untuk web server dan database
+```
+sudo apt-get install -y python3 python3-pip python3-full
+```
+15. Buat virtual environment untuk install package web server dan database, kami beri nama `workerenv`
+```
+python3 -m venv worker-env
+```
+16. Lalu aktifkan virtual environment dengan perintah ini
+```
+source worker-env/bin/activate
+```
+17. Akan terlihat bahwa virtual environment telah aktif jika ada tulisan di sebelah username user
+
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/c3846e3f-e8d1-48b2-94ba-5cdfaee5921e)
+
+18. Lalu install semua package Python yang dibutuhkan dengan `pip`
+```
+pip install flask flask_cors gunicorn flask_pymongo textblob pymongo gevent
+```
+19. [TBA]
