@@ -114,3 +114,55 @@ source worker-env/bin/activate
 pip install flask flask_cors gunicorn flask_pymongo textblob pymongo gevent
 ```
 19. [TBA]
+
+#### Konfigurasi VM Worker 2
+1. [TBA]
+
+### IV. Pengetesan Endpoint
+#### POST - /analyze
+#### Worker 1
+[TBA]
+#### Worker 2
+[TBA]
+
+#### GET - /history
+#### Worker 1
+[TBA]
+#### Worker 2
+[TBA]
+
+### V. Pengetesan Load Balancing
+#### Max RPS, 60s
+#### Worker 1
+[TBA]
+#### Worker 2
+[TBA]
+
+#### Max Peak Concurrency, Spawn Rate 50, 60s
+#### Worker 1
+[TBA]
+#### Worker 2
+[TBA]
+
+#### Max Peak Concurrency, Spawn Rate 100, 60s
+#### Worker 1
+[TBA]
+#### Worker 2
+[TBA]
+
+
+#### Max Peak Concurrency, Spawn Rate 200, 60s
+#### Worker 1
+[TBA]
+#### Worker 2
+[TBA]
+
+
+#### Max Peak Concurrency, Spawn Rate 500, 60s
+#### Worker 1
+[TBA]
+#### Worker 2
+[TBA]
+
+### VI. Saran dan Kesimpulan
+[TBA]
