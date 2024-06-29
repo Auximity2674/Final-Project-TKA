@@ -22,18 +22,18 @@ Berikut rancangan infrastruktur cloud untuk final project kami.
 
 Untuk membangun infrastruktur tersebut, kami menggunakan layanan awan dari `Google Cloud Platform` dengan memanfaatkan free trial sebesar `$300`. Rincian spesifikasi VM beserta harganya adalah sebagai berikut:
 
-| No | Nama                           | Spesifikasi          | Harga |
-|--- |--------------------------------|----------------------|------|
-| 1  | Worker 1                        | 2 vCPUs, 2 GB RAM | $18  |
-| 2  | Worker 2                        | 2 vCPUs, 2 GB RAM | $18  |
-| 3  | Load Balancer                        | Bawaan Google Cloud | -  |
+| No | Nama                           | Spesifikasi          | Harga   |
+|--- |--------------------------------|----------------------|---------|
+| 1  | Worker 1                       | 2 vCPUs, 2 GB RAM    | $18     |
+| 2  | Worker 2                       | 2 vCPUs, 2 GB RAM    | $18     |
+| 3  | Load Balancer                  | Bawaan Google Cloud  | -       |
 |    |                                | **Total**            | **$36** |
 
 
 ## III. Implementasi dan Konfigurasi
 
 ### Google Cloud Platform
-#### Pembuatan VM Instance untuk Worker 1 dan Worker 2 dengan Google Compute Engine
+#### Pembuatan VM Instance dengan Google Compute Engine
 1. Masuk ke [Google Cloud Console](https://console.cloud.google.com/) lalu masuk ke Compute Engine
 2. Pada VM instances, buat instance baru dengan klik tombol "Create Instance"
 3. Pilih region Jakarta, zone terserah, lalu pilih machine configuration E2
@@ -97,7 +97,7 @@ sudo systemctl enable mongod
 ```
 sudo apt-get install -y python3 python3-pip python3-full
 ```
-15. Buat virtual environment untuk install package web server dan database, kami beri nama `workerenv`
+15. Buat virtual environment untuk install package web server dan database, kami beri nama `worker-env`
 ```
 python3 -m venv worker-env
 ```
@@ -118,49 +118,64 @@ pip install flask flask_cors gunicorn flask_pymongo textblob pymongo gevent
 #### Konfigurasi VM Worker 2
 1. [TBA]
 
+#### Konfigurasi Group Instance untuk Google Cloud Load Balancer
+1. [TBA]
+
 ## IV. Pengetesan Endpoint
 ### POST - /analyze
 #### Worker 1
-[TBA]
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/f08ce1fa-44c3-4c4b-925f-2e2f73bdd7bd)
+Teks berhasil terkirim ke endpoint dengan metode POST, terlihat dari respons yang memberi kembali nilai sentiment.
 #### Worker 2
-[TBA]
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/99229450-516c-46c3-8056-020ef19ce5aa)
+Teks berhasil terkirim ke endpoint dengan metode POST, terlihat dari respons yang memberi kembali nilai sentiment.
 
 ### GET - /history
 #### Worker 1
-[TBA]
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/ecf91b86-51a6-4f57-b20e-1e357d97a201)
+Request berhasil terkirim ke endpoint dengan metode GET, terlihat dari respons yang memberi kembali data yang tersimpan pada MongoDB.
 #### Worker 2
-[TBA]
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/0f157ad8-5f8e-4c68-af74-77812b0c4d81)
+Request berhasil terkirim ke endpoint dengan metode GET, terlihat dari respons yang memberi kembali data yang tersimpan pada MongoDB.
 
 ## V. Pengetesan Load Balancing
-### Max RPS, 60s
+### Peak RPS, 60s
 #### Worker 1
-[TBA]
+![total_requests_per_second_1719673705 774](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/de06dcd8-12d0-4d52-8ff2-cbe73a5fb55c)
+RPS maksimal tercatat pada 93.4 requests/sec. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/c4bdb4c8-bf79-4975-9ee2-59f1e62937bd)
+
 #### Worker 2
 [TBA]
 
-### Max Peak Concurrency, Spawn Rate 50, 60s
+### Peak Concurrency, Spawn Rate 50, 60s
 #### Worker 1
-[TBA]
+![total_requests_per_second_1719675042 25](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/39297aeb-7662-41cc-96fd-aa7306a59944)
+Concurrency maksimal tercatat pada 400 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
+
 #### Worker 2
 [TBA]
 
-### Max Peak Concurrency, Spawn Rate 100, 60s
+### Peak Concurrency, Spawn Rate 100, 60s
 #### Worker 1
-[TBA]
-#### Worker 2
-[TBA]
-
-
-### Max Peak Concurrency, Spawn Rate 200, 60s
-#### Worker 1
-[TBA]
+![total_requests_per_second_1719675353 113](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/661cffe8-3f9c-4c50-aba2-820dfeede168)
+Concurrency maksimal tercatat pada 400 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 #### Worker 2
 [TBA]
 
 
-### Max Peak Concurrency, Spawn Rate 500, 60s
+### Peak Concurrency, Spawn Rate 200, 60s
 #### Worker 1
+![total_requests_per_second_1719675625 578](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/300eb604-352c-45ec-b9ad-8b59c6b8c7fc)
+Concurrency maksimal tercatat pada 400 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
+#### Worker 2
 [TBA]
+
+
+### Peak Concurrency, Spawn Rate 500, 60s
+#### Worker 1
+![total_requests_per_second_1719676232 613](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/86f105e6-1291-4cde-b2cc-33b99a8ef598)
+Concurrency maksimal tercatat pada 500 users. Tanpa failure, sehingga dapat dipastikan tes ini berhasil.
 #### Worker 2
 [TBA]
 
