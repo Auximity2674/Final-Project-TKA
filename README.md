@@ -11,7 +11,7 @@
 ## I. Permasalahan
 Anda adalah seorang lulusan Teknologi Informasi, sebagai ahli IT, salah satu kemampuan yang harus dimiliki adalah Keampuan merancang, membangun, mengelola aplikasi berbasis komputer menggunakan layanan awan untuk memenuhi kebutuhan organisasi.
 
-Pada suatu saat anda mendapatkan project untuk mendeploy sebuah aplikasi Sentiment Analysis dengan komponen Backend menggunakan python: <a href="attachments/backend/sentiment-analysis.py">sentiment-analysis.py</a>. Kemudian juga disediakan sebuah Frontend sederhana menggunakan <a href="attachments/frontend/index.html">index.html</a> dan <a href="attachments/frontend/styles.css">styles.css</a> yang telah ditetapkan.
+Pada suatu saat anda mendapatkan project untuk mendeploy sebuah aplikasi Sentiment Analysis dengan komponen Backend menggunakan python: <a href="https://github.com/fuaddary/fp-tka/blob/main/Resources/BE/sentiment-analysis.py">sentiment-analysis.py</a>. Kemudian juga disediakan sebuah Frontend sederhana menggunakan <a href="https://github.com/fuaddary/fp-tka/blob/main/Resources/FE/index.html">index.html</a> dan <a href="https://github.com/fuaddary/fp-tka/blob/main/Resources/FE/styles.css">styles.css</a> yang telah ditetapkan.
 
 Kemudian anda diminta untuk mendesain arsitektur cloud yang sesuai dengan kebutuhan aplikasi tersebut. Apabila dana maksimal yang diberikan adalah 1 juta rupiah per bulan (65 US$) konfigurasi cloud terbaik seperti apa yang bisa dibuat?
 
@@ -113,13 +113,54 @@ source worker-env/bin/activate
 ```
 pip install flask flask_cors gunicorn flask_pymongo textblob pymongo gevent
 ```
-19. [TBA]
+19. Setelah itu, kami membuat file baru untuk web server
+```
+nano sentiment-analysis.py
+```
+20. Setelah masuk `nano`, kami copy paste file yang telah disediakan lalu mengganti IP MongdoDB menjadi `localhost` karena database terdapat pada VM ini. Karena kami tidak mengubah port, sehingga kami memakai port default bawaan MongoDB.
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/e0b8e427-7c3c-420a-8179-9645f2091b60)
+21. Lalu kami run web server dengan menjalankan perintah ini
+```
+python sentiment-analysis.py
+```
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/7ed5c06e-1b57-474f-b466-9dd76000ef6e)
+
 
 #### Konfigurasi VM Worker 2
-1. [TBA]
+1. Langkah tidak jauh berbeda dengan VM worker 1, karena di sini hanya ada web server sehingga kami cukup menginstall yang berhubungan dengan web server saja. Yakni Python dan package-package yang dibutuhkan.
+```
+sudo apt-get update
+sudo apt-get install -y python3 python3-pip python3-full
+python3 -m venv worker-env
+source worker-env/bin/activate
+pip install flask flask_cors gunicorn flask_pymongo textblob pymongo gevent
+```
+2. Lalu kami membuat file baru untuk web server, sama seperti VM worker 1. Namun di sini, karena database terdapat pada VM worker 1, kami memasukkan IP internal VM worker 1 sebagai IP database.
+```
+nano sentiment-analysis.py
+```
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/2c95b821-15c4-445d-b1ca-f0e6207241f3)
+
+3. Setelah itu kami run seperti sebelumnya
+```
+python sentiment-analysis.py
+```
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/323d7dfa-5d4d-44f0-8e08-14cc47570e8e)
+
 
 #### Konfigurasi Group Instance untuk Google Cloud Load Balancer
-1. [TBA]
+1. Untuk mengaktifkan load balancer bawaan Google Cloud, kami perlu mengelompokkan VM worker 1 dan VM worker 2 menjadi satu group instance. Pertama kami masuk pada [halaman instance groups](https://console.cloud.google.com/compute/instanceGroups)
+2. Klik tombol Create Instance Group di atas layar
+3. Pilih new unmanaged instance group, lalu kami pilih yang sesuai dengan konfigurasi VM kami sebelumnya.
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/d546b8cf-9b8d-4567-bd50-46ef5cd1f821)
+
+4. Klik tombol Create di bawah layar
+5. Setelah itu masuk ke [halaman load balancing](https://console.cloud.google.com/net-services/loadbalancing/list/loadBalancers). Klik Create Load Balancer di atas layar.
+6. Biarkan konfigurasi seperti default.
+7. Klik tombol Create di bawah layar.
+8. Semua sudah sesuai, saat kami klik load balancer yang telah dibuat. Maka akan muncul IP load balancer.
+![image](https://github.com/Auximity2674/Final-Project-TKA/assets/134349363/5f5e9b8a-e74f-4631-918a-974cc904efc5)
+
 
 ## IV. Pengetesan Endpoint
 ### POST - /analyze
