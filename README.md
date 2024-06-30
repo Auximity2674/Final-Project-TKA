@@ -233,3 +233,6 @@ Dengan budget bulanan sebesar $36, kami dapat mengoptimalkan Google Cloud Platfo
 Berdasarkan laporan dari Locust, terbukti bahwa peningkatan user spawn rate secara signifikan meningkatkan RPS (Request Per Second) dan concurrency. Namun, perlu diperhatikan bahwa peak concurrency yang berlebihan dapat mengakibatkan kegagalan koneksi server (failure).
 
 Saran ke depan ialah mencoba untuk mengoptimalkan kembali secara spesifikasi VM serta teknik-teknik cloud lainnya untuk meningkatkan RPS dan concurrency tanpa mengkompromikan kestabilan koneksi. Seperti auto-scaling, auto-recovery/auto-revive, caching, dan lainnya.
+
+## Vidio Revisi
+https://youtu.be/wDFfvx0fDGU
